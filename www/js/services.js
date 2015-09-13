@@ -6,12 +6,13 @@ angular.module('starter.services', [])
       //'Content-Type':'application/json'
     };
     var data = {
-      'authentication_token': Config.accessToken
-    }
+    };
     params = params || {};
-    params.headers = params.headers || {};
-    params.headers = angular.extend(headers, params.headers);
-    params.data = angular.extend(data, params.data);
+    // console.log(Config.authentication_token);
+    params.authentication_token = Config.authentication_token;
+    // params.headers = params.headers || {};
+    // params.headers = angular.extend(headers, params.headers);
+    // params.data = angular.extend(data, params.data);
     return params;
   }
 
@@ -20,8 +21,10 @@ angular.module('starter.services', [])
 
   var service = {
     all: function(classname, params) {
+      // console.dir(params);
+      // console.dir(parseParams(params));
       var d = $q.defer();
-      $http.get(URL + classname, parseParams({params:params})).then(function(result) {
+      $http.get(URL + classname, {params:parseParams(params)}).then(function(result) {
         // console.dir(result.data.data);
         d.resolve(result.data.data);
       },function(err) {
@@ -30,8 +33,9 @@ angular.module('starter.services', [])
       return d.promise;
     },
     get: function(classname, id, params) {
+      console.dir(params);
       var d = $q.defer();
-      $http.get(URL + classname + '/' + id, parseParams({params:params})).then(function(result) {
+      $http.get(URL + classname + '/' + id, {params:parseParams(params)}).then(function(result) {
         d.resolve(result.data);
       },function(err) {
         d.reject(err);
@@ -94,14 +98,14 @@ angular.module('starter.services', [])
       // return issues;
     },
     get: function(id) {
-      return DataStore.get('issue', id);
+      return DataStore.get('issues', id);
       // return issues[id];
     },
     my: function() {
       return [issues[0], issues[1]];
     },
     create: function(issue) {
-      return DataStore.create('issue', {'data': issue});
+      return DataStore.create('issues', {'data': issue});
     }
   };
   return service;
@@ -156,24 +160,25 @@ angular.module('starter.services', [])
   // ];
 
   var _currentUser = undefined;  
+  var _reps = [];
   var service = {
-    all: function() {
-      return users;
-    },
     get: function(id) {
-      return users[id];
+      return DataStore.get('users', id, {});
     },
     me: function() {
-      return serice.currentUser();
+      return service.currentUser();
     },
     myRepresentitives: function() {
-      return [users[0], users[1]];
+      return DataStore.all('same_votes_reps', {});
+      // return [users[0], users[1]];
     },
-    login: function() {
+    login: function(creds) {
       var d=$q.defer();
-      $http.post(Config.API_URL + '/login').then(function(result) {
+      $http.post(Config.API_URL + '/login', creds).then(function(result) {
         console.dir(result);
-        _currentUser = result.user;
+        Config.authentication_token = result.data.auth_token;
+        _currentUser = result.data.user;
+        _currentUser.vote_issues = result.data.vote_issues;
         d.resolve(result);
       }, function(err) {
         console.dir(err);
@@ -194,6 +199,7 @@ angular.module('starter.services', [])
       return d.promise;
     },
     currentUser: function() {
+      console.dir(_currentUser);
       if(_currentUser){
         return $q.when(_currentUser);
       }else{

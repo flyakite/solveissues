@@ -4,7 +4,7 @@
 
       <div class="item">
         <h2>{{user.name}}</h2>
-        支持了 {{user.voted_issues.length}} 個議題
+        支持了 {{user.vote_issues.length}} 個議題
       </div>
 
 
@@ -12,7 +12,7 @@
         <ion-item class="item item-divider">
           支持的議題
         </ion-item>
-        <ion-item class="item" ui-sref="tab.issue({issueId: issue.id})" ng-repeat="issue in user.voted_issues">
+        <ion-item class="item" ui-sref="tab.issue({issueId: issue.id})" ng-repeat="issue in user.vote_issues">
         {{issue.title}}
         </ion-item>
       </ion-list>

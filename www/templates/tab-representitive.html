@@ -20,8 +20,8 @@
         <ion-item class="item item-divider">
           和您支持相同的議題
         </ion-item>
-        <ion-item class="item" ui-sref="tab.issue({issueId: issue.id})" ng-repeat="issue in user.same_issues">
-        {{issue.title}}
+        <ion-item class="item" ui-sref="tab.issue({issueId: issue.id || issue})" ng-repeat="issue in user.same_issues">
+        {{issue.title || issue}}
         </ion-item>
 
         <ion-item class="item item-divider" ng-show="user.more_issues">

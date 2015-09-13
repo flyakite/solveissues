@@ -6,7 +6,7 @@
         ui-sref="tab.representitive({userId: rep.id})">
         <img alt="" ng-src="{{rep.picture}}">
         <b>{{rep.name}}</b>
-        和您同樣支持 {{rep.same_issue_count}} 個議題
+        和您同樣支持 {{rep.same_issues.length}} 個議題
         <i class="icon ion-ios-arrow-forward"></i>
       </ion-item>
     </div>

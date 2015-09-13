@@ -8,7 +8,7 @@
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 .value('Config', {
   API_URL: 'https://stark-badlands-3288.herokuapp.com/api/v1',
-  accessToken: ''
+  authentication_token: ''
 })
 .run(function($ionicPlatform, $rootScope, $state) {
   $rootScope.$on('$stateChangeError',
@@ -85,6 +85,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         templateUrl: 'templates/tab-create-issue.html',
         controller: 'CreateIssueController'
      }
+    },
+    resolve: {
+      currentUser: function(UserService) {
+        return UserService.currentUser();
+      }
     }
   })
   .state('tab.representitive', {
