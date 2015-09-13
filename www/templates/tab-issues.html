@@ -1,0 +1,14 @@
+<ion-view view-title="議題列表">
+  <ion-nav-buttons side="right">
+    <button class="button icon ion-plus" ng-click="createIssue()">
+    </button>
+  </ion-nav-buttons>
+  <ion-content class="">
+    <div class="list">
+      <a class="item" ng-repeat="issue in issues" ui-sref="tab.issue({issueId: issue.id})">
+        {{issue.title}}
+        <span class="badge">{{issue.vote_count}}</span>
+      </a>
+    </div>
+  </ion-content>
+</ion-view>

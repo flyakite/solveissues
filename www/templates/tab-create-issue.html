@@ -1,0 +1,25 @@
+<ion-view view-title="建立議題">
+  <ion-nav-buttons side="right">
+    <button class="button" ng-click="saveIssue()">
+    </button>
+  </ion-nav-buttons>
+  <ion-content class="">
+    <form>
+      <ion-list>
+        <label class="item item-input">
+          <input type="text" placeholder="議題名稱" autocorrect="off" autocapitalize="off" ng-model="issue.title">
+        </label>
+        <label class="item item-input">
+          <textarea type="text" placeholder="議題" ng-model="issue.description">
+          </textarea>
+        </label>
+      </ion-list>
+      <div class="spacer" style="height: 40px"></div>
+      <a href="" ng-click="login()" class="button button-stable button-block">建立議題</a>
+      <div class="spacer" style="height: 20px"></div>
+      <div style="text-align: center;color: red">
+        {{message}}
+      </div>
+    </form>
+  </ion-content>
+</ion-view>
